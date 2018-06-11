@@ -38,10 +38,10 @@
     {
         CGContextRef context = UIGraphicsGetCurrentContext();
         
-        if (circular) {
-            CGContextAddEllipseInRect(context, (CGRect){CGPointZero, frame.size});
-            CGContextClip(context);
-        }
+        //if (circular) {
+        //    CGContextAddEllipseInRect(context, (CGRect){CGPointZero, frame.size});
+        //    CGContextClip(context);
+        //}
         
         //To conserve memory in not needing to completely re-render the image re-rotated,
         //map the image to a view and then use Core Animation to manipulate its rotation
