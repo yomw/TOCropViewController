@@ -18,8 +18,8 @@ class ViewController: UIViewController, CropViewControllerDelegate, UIImagePicke
     private var croppedRect = CGRect.zero
     private var croppedAngle = 0
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = (info[UIImagePickerControllerOriginalImage] as? UIImage) else { return }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
         let cropController = CropViewController(croppingStyle: croppingStyle, image: image)
         cropController.delegate = self
@@ -50,7 +50,13 @@ class ViewController: UIViewController, CropViewControllerDelegate, UIImagePicke
         
         //If profile picture, push onto the same navigation stack
         if croppingStyle == .circular {
-            picker.pushViewController(cropController, animated: true)
+            if picker.sourceType == .camera {
+                picker.dismiss(animated: true, completion: {
+                    self.present(cropController, animated: true, completion: nil)
+                })
+            } else {
+                picker.pushViewController(cropController, animated: true)
+            }
         }
         else { //otherwise dismiss, and then present from the main controller
             picker.dismiss(animated: true, completion: {
@@ -105,6 +111,9 @@ class ViewController: UIViewController, CropViewControllerDelegate, UIImagePicke
         
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleAspectFit
+        if #available(iOS 11.0, *) {
+            imageView.accessibilityIgnoresInvertColors = true
+        }
         view.addSubview(imageView)
         
         let tapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(didTapImageView))

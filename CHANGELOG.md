@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 2.3.8 - 2018-08-15
+
+### Added
+- Image does not invert when 'Smart Invert Colors' is enabled.
+
+### Fixed
+- A Core Animation crash when the image size is initially NaN.
+- The image being positioned slightly higher than it should be on iPhone X.
+- An imprecision issue where the reported cropping frame was out of bounds.
+
+## 2.3.7 - 2018-07-24
+
+### Added
+- `minimumAspectRatio` to set a minimum shape that the cropping box can be scaled to.
+- `cropViewPadding` to specifically control how much padding from the edge the crop box gives.
+- `cropAdjustingDelay` to specifically control how long the timer waits until animating the crop transition.
+- `aspectRatioLockDimensionSwapEnabled` as a stopgap to locking the aspect ratio when rotating the image.
+
+
+### Fixed
+- More thorough sanitation of the final frame calculation.
+- A bug where sometimes the square aspect ratio would stop being square.
+- A memory cycle leak in the Swift wrapper.
+- A broken animation when rotating the device orientation 180 degrees.
+- A broken animation if you hit 'reset' right after resizing the crop box.
+- Danish and Malaysian localisations weren't being imported properly.
+
 ## 2.3.6 - 2018-01-02
 
 ### Added
